@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Authentication = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const emailHandler = (event) => setEmail(event.target.value);
+  const passwordHandler = (event) => setPassword(event.target.value);
+
   return (
     <div className="auth-page">
       <div className="container page">
@@ -18,16 +24,26 @@ const Authentication = () => {
                     type="email"
                     className="form-control form-control-lg"
                     placeholder="Email"
+                    value={email}
+                    onChange={emailHandler}
                   />
                 </fieldset>
-                  <fieldset className="form-group">
+                <fieldset className="form-group">
                   <input
                     type="password"
                     className="form-control form-control-lg"
                     placeholder="Password"
+                    value={password}
+                    onChange={passwordHandler}
                   />
                 </fieldset>
-                  <button className='btn btn-lg btn-primary pull-xs-right' type='submit'> Sign in</button>
+                <button
+                  className="btn btn-lg btn-primary pull-xs-right"
+                  type="submit"
+                >
+                  {" "}
+                  Sign in
+                </button>
               </fieldset>
             </form>
           </div>
