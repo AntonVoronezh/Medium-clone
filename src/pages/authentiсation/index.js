@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Authentication = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const inputRef = useRef(null);
+  useEffect(()=>{
+      inputRef.current.focus()
+  })
 
   const emailHandler = (event) => setEmail(event.target.value);
   const passwordHandler = (event) => setPassword(event.target.value);
+
+
 
   return (
     <div className="auth-page">
@@ -26,6 +32,7 @@ const Authentication = () => {
                     placeholder="Email"
                     value={email}
                     onChange={emailHandler}
+                    ref={inputRef}
                   />
                 </fieldset>
                 <fieldset className="form-group">
