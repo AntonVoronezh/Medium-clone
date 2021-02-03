@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import useFetch from "../../hooks/useFetch";
 
@@ -13,13 +13,23 @@ const Authentication = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [{ isLoading, responce, error }, doFetch] = useFetch(apiUrl);
+  const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
+  const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
 
   const inputRef = useRef(null);
 
   useEffect(() => {
-    inputRef.current.focus();
+    // inputRef.current.focus();
   });
+
+  useEffect(() => {
+    if (!response) {
+      return;
+    }
+
+    localStorage.setItem("token", response.user.token);
+    setSuccessfulSubmit(true);
+  }, [response]);
 
   const emailHandler = (event) => setEmail(event.target.value);
   const userHandler = (event) => setUsername(event.target.value);
@@ -37,6 +47,10 @@ const Authentication = (props) => {
       },
     });
   };
+
+  if (isSuccessfulSubmit) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="auth-page">
