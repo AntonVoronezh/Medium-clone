@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
 import useFetch from "../../hooks/useFetch";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { CurrentUserContext } from "../../contexts/currentUser";
 
 const Authentication = (props) => {
   const isLogin = props.match.path === "/login";
@@ -16,8 +17,12 @@ const Authentication = (props) => {
   const [username, setUsername] = useState("");
   const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
-  const [token, setToken] = useLocalStorage('token')
-  console.log(token)
+  const [token, setToken] = useLocalStorage("token");
+  const [currentUserState, setCurrentUserState] = useContext(
+    CurrentUserContext
+  );
+  console.log(currentUserState);
+
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -29,8 +34,15 @@ const Authentication = (props) => {
       return;
     }
 
-    setToken( response.user.token);
+    setToken(response.user.token);
     setSuccessfulSubmit(true);
+    setCurrentUserState((state) => ({
+      ...state,
+      isLoading: false,
+      isLoggedIn: true,
+      currentUser: response.user,
+    }));
+    console.log(currentUserState);
   }, [response, setToken]);
 
   const emailHandler = (event) => setEmail(event.target.value);
