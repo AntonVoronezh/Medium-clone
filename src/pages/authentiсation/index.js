@@ -18,11 +18,10 @@ const Authentication = (props) => {
   const [username, setUsername] = useState("");
   const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
-  const [token, setToken] = useLocalStorage("token");
+  const [, setToken] = useLocalStorage("token");
   const [currentUserState, setCurrentUserState] = useContext(
     CurrentUserContext
   );
-  console.log(currentUserState);
 
   const inputRef = useRef(null);
 
