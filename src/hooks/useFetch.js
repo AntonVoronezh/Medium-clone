@@ -25,8 +25,8 @@ export default (url) => {
       })
       .catch((err) => {
         setIsLoading(false);
-        setError(err.data);
-      });
+        setError(err.response.data);
+        });
   },
     [isLoading, url, options]);
 

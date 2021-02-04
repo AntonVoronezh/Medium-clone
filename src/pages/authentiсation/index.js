@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { CurrentUserContext } from "../../contexts/currentUser";
+import BackendErrorMessages from "./components/backendErrorMessages";
 
 const Authentication = (props) => {
   const isLogin = props.match.path === "/login";
@@ -75,6 +76,7 @@ const Authentication = (props) => {
             <p className="text-xs-center">
               <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
+            {error && <BackendErrorMessages errors={error.errors}/>}
             <form onSubmit={handleSubmit}>
               <fieldset>
                 {!isLogin && (
