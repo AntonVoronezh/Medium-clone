@@ -31,7 +31,7 @@ const Authentication = (props) => {
 
     setToken( response.user.token);
     setSuccessfulSubmit(true);
-  }, [response]);
+  }, [response, setToken]);
 
   const emailHandler = (event) => setEmail(event.target.value);
   const userHandler = (event) => setUsername(event.target.value);
