@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import useFetch from "../../hooks/useFetch";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import { useFetch } from "../../hooks/useFetch";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import BackendErrorMessages from "./components/backendErrorMessages";
 
@@ -19,7 +19,7 @@ const Authentication = (props) => {
   const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
   const [, setToken] = useLocalStorage("token");
-  const [currentUserState, setCurrentUserState] = useContext(
+  const [, setCurrentUserState] = useContext(
     CurrentUserContext
   );
 
@@ -42,8 +42,7 @@ const Authentication = (props) => {
       isLoggedIn: true,
       currentUser: response.user,
     }));
-    console.log(currentUserState);
-  }, [response, setToken]);
+  }, [response, setToken, setCurrentUserState, setSuccessfulSubmit]);
 
   const emailHandler = (event) => setEmail(event.target.value);
   const userHandler = (event) => setUsername(event.target.value);

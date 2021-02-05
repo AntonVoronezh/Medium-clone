@@ -5,7 +5,7 @@ import GlobalFeed from "./pages/globalFeed";
 import Article from "./pages/article";
 import Authentication from "./pages/authentiсation";
 
-export default () => {
+export const Routes = () => {
   return (
     <Switch>
       <Route path="/" component={GlobalFeed} exact={true}/>
