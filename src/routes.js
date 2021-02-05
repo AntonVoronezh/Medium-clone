@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import GlobalFeed from "./pages/globalFeed";
+import { GlobalFeed } from "./pages/globalFeed";
 import Article from "./pages/article";
 import Authentication from "./pages/authentiсation";
 
