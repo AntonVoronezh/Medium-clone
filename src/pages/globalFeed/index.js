@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
+import { stringify } from "query-string";
+import React, { Fragment, useEffect } from "react";
+
 import { useFetch } from "../../hooks/useFetch";
 import { Feed } from "../../components/feed";
+import { Pagination } from "../../components/pagination";
+import { getPaginator, limit } from "../../utils";
+import { PopularTags } from "../../components/popularTags";
+import {Loading} from "../../components/loading";
+import {ErrorMessage} from "../../components/errorMessage";
+import {FeedTogler} from "../../components/feedTogler";
 
-export const GlobalFeed = () => {
-  const apiUrl = "/articles?limit=10&offset=0";
+export const GlobalFeed = ({ location, match: { url } }) => {
+  const { offset, currentPage } = getPaginator(location);
+  const stringParameters = stringify({ offset, limit });
+  const apiUrl = `/articles?${stringParameters}`;
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
-  console.log(response);
+
   useEffect(() => {
     doFetch();
-  }, [doFetch]);
+  }, [doFetch, currentPage]);
 
   return (
     <div className="home-page">
@@ -21,13 +31,24 @@ export const GlobalFeed = () => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            {isLoading && "Loading"}
-            {error && "Some error"}
+            <FeedTogler />
+            {isLoading && <Loading />}
+            {error && <ErrorMessage />}
             {!isLoading && response && (
-              <Feed articles={response.articles}></Feed>
+              <Fragment>
+                <Feed articles={response.articles}></Feed>
+                <Pagination
+                  total={response.articlesCount}
+                  url={url}
+                  currentPage={currentPage}
+                  limit={limit}
+                />
+              </Fragment>
             )}
           </div>
-          <div className="col-md-3">popular tags</div>
+          <div className="col-md-3">
+            <PopularTags />
+          </div>
         </div>
       </div>
     </div>
