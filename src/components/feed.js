@@ -9,14 +9,14 @@ export const Feed = ({ articles }) => {
           <div className="article-preview" key={idx}>
             <div className="article-meta">
               <Link to={`/profiles/${article.author.username}`}>
-                <img src={`${article.author.image}`} />
+                <img src={article.author.image} alt='' />
               </Link>
               <div className="info">
                 <Link
                   to={`/profiles/${article.author.username}`}
                   className="author"
                 >
-                  {article.author.username}`
+                  {article.author.username}
                 </Link>
                 <span className="date">{article.createdAt}</span>
               </div>
