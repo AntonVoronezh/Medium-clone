@@ -19,9 +19,7 @@ const Authentication = (props) => {
   const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
   const [, setToken] = useLocalStorage("token");
-  const [, setCurrentUserState] = useContext(
-    CurrentUserContext
-  );
+  const [, dispatch] = useContext(CurrentUserContext);
 
   const inputRef = useRef(null);
 
@@ -36,13 +34,8 @@ const Authentication = (props) => {
 
     setToken(response.user.token);
     setSuccessfulSubmit(true);
-    setCurrentUserState((state) => ({
-      ...state,
-      isLoading: false,
-      isLoggedIn: true,
-      currentUser: response.user,
-    }));
-  }, [response, setToken, setCurrentUserState, setSuccessfulSubmit]);
+    dispatch({ type: "SET_AUTHORIZED", payload: response.user });
+  }, [response, setToken, dispatch, setSuccessfulSubmit]);
 
   const emailHandler = (event) => setEmail(event.target.value);
   const userHandler = (event) => setUsername(event.target.value);
@@ -74,7 +67,7 @@ const Authentication = (props) => {
             <p className="text-xs-center">
               <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
-            {error && <BackendErrorMessages errors={error.errors}/>}
+            {error && <BackendErrorMessages errors={error.errors} />}
             <form onSubmit={handleSubmit}>
               <fieldset>
                 {!isLogin && (
