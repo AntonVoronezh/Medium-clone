@@ -15,7 +15,7 @@ export const PopularTags = () => {
     return <Loading />;
   }
   if (error) {
-    return <ErrorMessage />;
+    return <ErrorMessage errors={[]}/>;
   }
 
   return (
