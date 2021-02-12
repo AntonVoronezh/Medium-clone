@@ -36,7 +36,7 @@ export const Article = (props) => {
       </div>
       <div className="container page">
         {isLoading && <Loading />}
-        {error && <ErrorMessage />}
+        {error && <ErrorMessage errors={error}/>}
         {!isLoading && response && (
           <div className="article-content row">
             <div className="col-xs-12">
