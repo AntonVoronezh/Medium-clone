@@ -1,18 +1,50 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Loading } from "../../components/loading";
 import { ErrorMessage } from "../../components/errorMessage";
-import {TagList} from "../../components/tagList";
+import { TagList } from "../../components/tagList";
+import { CurrentUserContext } from "../../contexts/currentUser";
 
 export const Article = (props) => {
   const slug = props.match.params.slug;
   const apiUrl = `/articles/${slug}`;
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
+  const [{ response: deleteArticleResponse }, doDeleteArticle] = useFetch(
+    apiUrl
+  );
+  const [currentUserState] = useContext(CurrentUserContext);
+  const [isSuccessfullDelete, setIsSucsessfullDelete] = useState(false);
+
+  const isAuthor = () => {
+    if (!response || !currentUserState.isLoggedIn) {
+      return false;
+    }
+
+    return (
+      response.article.author.username === currentUserState.currentUser.username
+    );
+  };
+
+  const deleteArticle = () => {
+    doDeleteArticle({ method: "delete" });
+  };
 
   useEffect(() => {
     doFetch();
   }, [doFetch]);
+
+  useEffect(() => {
+    if (!deleteArticleResponse) {
+      return;
+    }
+
+    setIsSucsessfullDelete(true);
+  }, [deleteArticleResponse]);
+
+  if (isSuccessfullDelete) {
+    return <Redirect to={`/`} />;
+  }
 
   return (
     <div className="article-page">
@@ -30,13 +62,29 @@ export const Article = (props) => {
                 </Link>
                 <span className="date">{response.article.createdAt}</span>
               </div>
+              {isAuthor() && (
+                <span>
+                  <Link
+                    className="btn btn-outline-secondary btn-sm"
+                    to={`/articles/${response.article.slug}/edit`}
+                  >
+                    Edit Article
+                  </Link>
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={deleteArticle}
+                  >
+                    Delete Article
+                  </button>
+                </span>
+              )}
             </div>
           </div>
         )}
       </div>
       <div className="container page">
         {isLoading && <Loading />}
-        {error && <ErrorMessage errors={error}/>}
+        {error && <ErrorMessage errors={error} />}
         {!isLoading && response && (
           <div className="article-content row">
             <div className="col-xs-12">
