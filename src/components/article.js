@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {ErrorMessage} from "./errorMessage";
+import { ErrorMessage } from "./errorMessage";
+import { CurrentUserContext } from "../contexts/currentUser";
 
 export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
   const [title, setTitle] = useState("");
@@ -9,7 +10,7 @@ export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({title, body, description, tagList});
+    onSubmit({ title, body, description, tagList });
   };
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
       return;
     }
 
-    setTagList(initialValues.tagList.join(' '));
+    setTagList(initialValues.tagList.join(" "));
     setBody(initialValues.body);
     setTitle(initialValues.title);
     setDescription(initialValues.description);
@@ -28,7 +29,7 @@ export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
-            {errors && <ErrorMessage errors={errors}/>}
+            {errors && <ErrorMessage errors={errors} />}
             <form onSubmit={handleSubmit}>
               <fieldset>
                 <fieldset className="form-group">
