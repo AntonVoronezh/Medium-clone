@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { NavLink } from "react-router-dom";
+import {UserArticles} from "./components/userArticles";
 
 export const UserProfile = ({ location, match }) => {
   const slug = match.params.slug;
@@ -35,12 +36,17 @@ export const UserProfile = ({ location, match }) => {
               <div className="articles-toggle">
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
-                    <NavLink  classNmae='nav-link' to={`/profiles/${response.profile.username}`} exact>
+                    <NavLink
+                      classNmae="nav-link"
+                      to={`/profiles/${response.profile.username}`}
+                      exact
+                    >
                       My posts
                     </NavLink>
                   </li>
                   <li className="nav-item">
-                    <NavLink classNmae={'nav-link' }
+                    <NavLink
+                      classNmae={"nav-link"}
                       to={`/profiles/${response.profile.username}/favorites`}
                     >
                       Favorites posts
@@ -51,7 +57,12 @@ export const UserProfile = ({ location, match }) => {
             </div>
           </div>
         </div>
-        ------
+        <UserArticles
+          username={response.profile.username}
+          location={location}
+          isFavorites={isFavorites}
+          url={match.url}
+        />
       </div>
     </div>
   );

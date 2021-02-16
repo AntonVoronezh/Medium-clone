@@ -8,7 +8,7 @@ export const useFetch = (url) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [options, setOptions] = useState({});
-  const [token] = useLocalStorage('token');
+  const [token] = useLocalStorage("token");
 
   const doFetch = useCallback((options = {}) => {
     setOptions(options);
@@ -16,11 +16,13 @@ export const useFetch = (url) => {
   }, []);
 
   useEffect(() => {
+    let skipGetResponseAfterDestroy = false;
+
     const requestOptions = {
       ...options,
       ...{
         headers: {
-          authorization: token ? `Token ${token}` : '',
+          authorization: token ? `Token ${token}` : "",
         },
       },
     };
@@ -31,13 +33,19 @@ export const useFetch = (url) => {
 
     axios(baseUrl + url, requestOptions)
       .then((res) => {
-        setIsLoading(false);
-        setResponse(res.data);
+        if (!skipGetResponseAfterDestroy) {
+          setIsLoading(false);
+          setResponse(res.data);
+        }
       })
       .catch((err) => {
-        setIsLoading(false);
-        setError(err.response.data);
+        if (!skipGetResponseAfterDestroy) {
+          setIsLoading(false);
+          setError(err.response.data);
+        }
       });
+
+    return () => (skipGetResponseAfterDestroy = true);
   }, [isLoading, url, options, token]);
 
   return [{ isLoading, response, error }, doFetch];
