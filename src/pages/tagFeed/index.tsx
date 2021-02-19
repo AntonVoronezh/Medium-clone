@@ -8,11 +8,10 @@ import { getPaginator, limit } from "../../utils";
 import { PopularTags } from "../../components/popularTags";
 import { Loading } from "../../components/loading";
 import { ErrorMessage } from "../../components/errorMessage";
-import { FeedTogler } from "../../components/feedTogler";
+import { FeedToggler } from "../../components/feedToggler";
 
 export const TagFeed = ({ location, match }) => {
   const tagName = match.params.slug;
-  console.log(tagName);
   const { offset, currentPage } = getPaginator(location);
   const stringParameters = stringify({ offset, limit, tag: tagName });
   const apiUrl = `/articles?${stringParameters}`;
@@ -33,9 +32,9 @@ export const TagFeed = ({ location, match }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            <FeedTogler tagName={tagName} />
+            <FeedToggler tagName={tagName} />
             {isLoading && <Loading />}
-            {error && <ErrorMessage />}
+            {error && <ErrorMessage errors={[]}/>}
             {!isLoading && response && (
               <Fragment>
                 <Feed articles={response.articles}></Feed>

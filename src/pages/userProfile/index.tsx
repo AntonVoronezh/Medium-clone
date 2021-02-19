@@ -37,7 +37,7 @@ export const UserProfile = ({ location, match }) => {
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
                     <NavLink
-                      classNmae="nav-link"
+                      className="nav-link"
                       to={`/profiles/${response.profile.username}`}
                       exact
                     >
@@ -46,7 +46,7 @@ export const UserProfile = ({ location, match }) => {
                   </li>
                   <li className="nav-item">
                     <NavLink
-                      classNmae={"nav-link"}
+                      className={"nav-link"}
                       to={`/profiles/${response.profile.username}/favorites`}
                     >
                       Favorites posts

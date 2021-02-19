@@ -8,7 +8,7 @@ import { getPaginator, limit } from "../../utils";
 import { PopularTags } from "../../components/popularTags";
 import {Loading} from "../../components/loading";
 import {ErrorMessage} from "../../components/errorMessage";
-import {FeedTogler} from "../../components/feedTogler";
+import {FeedToggler} from "../../components/feedToggler";
 
 export const YourFeed = ({ location, match: { url } }) => {
   const { offset, currentPage } = getPaginator(location);
@@ -31,9 +31,9 @@ export const YourFeed = ({ location, match: { url } }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            <FeedTogler />
+            <FeedToggler />
             {isLoading && <Loading />}
-            {error && <ErrorMessage />}
+            {error && <ErrorMessage errors={[]}/>}
             {!isLoading && response && (
               <Fragment>
                 <Feed articles={response.articles}></Feed>
