@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUser";
 import { useFetch } from "../../hooks/useFetch";
@@ -7,7 +7,7 @@ import BackendErrorMessages from "../authentiсation/components/backendErrorMess
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const Settings = () => {
-  const [currentUserState, dispatch] = useContext(CurrentUserContext);
+  const { state: currentUserState, dispatch } = useContext(CurrentUserContext);
   const apiUrl = "/user";
   const [{ response, error }, doFetch] = useFetch(apiUrl);
   const [image, setImage] = useState("");
@@ -15,7 +15,7 @@ export const Settings = () => {
   const [bio, setBio] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const [, setToken] = useLocalStorage("token");
+  const { setValue: setToken } = useLocalStorage("token");
   const [isSuccessfullLogout, setIsSucsessfullLogout] = useState(false);
 
   const handleSubmit = (e) => {
@@ -61,9 +61,9 @@ export const Settings = () => {
     dispatch({ type: "SET_AUTHORIZED", payload: response.user });
   }, [response, dispatch]);
 
-    if (isSuccessfullLogout) {
-        return <Redirect to={`/`} />;
-    }
+  if (isSuccessfullLogout) {
+    return <Redirect to={`/`} />;
+  }
 
   return (
     <div className="settings-page">
@@ -95,7 +95,6 @@ export const Settings = () => {
                 <fieldset className="form-group">
                   <textarea
                     className="form-control form-control-lg"
-                    rows="8"
                     placeholder="Short bio"
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}

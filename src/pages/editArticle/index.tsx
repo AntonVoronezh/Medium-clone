@@ -5,7 +5,20 @@ import { useFetch } from "../../hooks/useFetch";
 import { ArticleForm } from "../../components/article";
 import { CurrentUserContext } from "../../contexts/currentUser";
 
-export const EditArticle = ({ match }) => {
+interface IValue {
+  title: string;
+  body: string;
+  description: string;
+  tagList: string;
+}
+
+interface IProps {
+  match: any;
+}
+
+export const EditArticle: ({ match }: IProps) => JSX.Element = ({
+  match,
+}: IProps) => {
   const slug = match.params.slug;
   const apiUrl = `/articles/${slug}`;
   const [{ response: fetchArticleResponse }, doFetchArticle] = useFetch(apiUrl);
@@ -13,9 +26,9 @@ export const EditArticle = ({ match }) => {
     { response: updateArticleResponse, error: updateArticleError },
     doUpdateArticle,
   ] = useFetch(apiUrl);
-  const [initialValues, setInitialValues] = useState(null);
-  const [isSuccessfullSubmit, setIsSucsessfullSubmit] = useState(false);
-  const [currentUserState] = useContext(CurrentUserContext);
+  const [initialValues, setInitialValues] = useState<IValue | null>(null);
+  const [isSuccessfullySubmit, setIsSuccessfullySubmit] = useState(false);
+  const { state: currentUserState } = useContext(CurrentUserContext);
 
   const handleSubmit = (article) => {
     doUpdateArticle({
@@ -46,14 +59,14 @@ export const EditArticle = ({ match }) => {
       return;
     }
 
-    setIsSucsessfullSubmit(true);
+    setIsSuccessfullySubmit(true);
   }, [updateArticleResponse]);
 
   if (currentUserState.isLoggedIn === false) {
     return <Redirect to={`/`} />;
   }
 
-  if (isSuccessfullSubmit) {
+  if (isSuccessfullySubmit) {
     return <Redirect to={`/articles/${slug}`} />;
   }
 
