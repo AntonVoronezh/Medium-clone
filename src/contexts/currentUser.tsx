@@ -1,12 +1,28 @@
-import React, { createContext, useReducer } from "react";
+import React, {createContext, Dispatch, useReducer} from "react";
 
-const initialsState = {
+interface IState {
+  isLoading: boolean;
+  isLoggedIn: null | boolean;
+  currentUser: null | any;
+}
+
+interface IAction {
+  type: string;
+  payload?: any;
+}
+
+interface IContext {
+  state: IState;
+  dispatch: Dispatch<IAction>;
+}
+
+const initialsState: IState = {
   isLoading: false,
   isLoggedIn: null,
   currentUser: null,
 };
 
-const reducer = (state, action) => {
+const reducer = (state: IState, action: IAction): IState => {
   switch (action.type) {
     case "LOADING":
       return { ...state, isLoading: true };
@@ -26,12 +42,12 @@ const reducer = (state, action) => {
   }
 };
 
-export const CurrentUserContext = createContext();
+export const CurrentUserContext = createContext({} as IContext);
 
-export const CurrentUserProvider = ({ children }) => {
-  const value = useReducer(reducer, initialsState);
+export const CurrentUserProvider = ({ children, className}) => {
+  const [state, dispatch] = useReducer(reducer, initialsState);
   return (
-    <CurrentUserContext.Provider value={value}>
+    <CurrentUserContext.Provider value={{state, dispatch}}>
       {children}
     </CurrentUserContext.Provider>
   );

@@ -5,8 +5,8 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const CurrentUserChecker = ({ children }) => {
   const [{ response }, doFetch] = useFetch("/user");
-  const [, dispatch] = useContext(CurrentUserContext);
-  const [token] = useLocalStorage("token");
+  const { dispatch } = useContext(CurrentUserContext);
+  const { value: token } = useLocalStorage("token");
 
   useEffect(() => {
     if (!token) {

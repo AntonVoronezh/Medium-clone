@@ -3,8 +3,12 @@ import { NavLink } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/currentUser";
 
-export const FeedTogler = ({ tagName }) => {
-  const [currentUserState] = useContext(CurrentUserContext);
+interface Props {
+  tagName?: string;
+}
+
+export const FeedToggler: React.FC<Props> = ({ tagName }) => {
+  const { state: currentUserState } = useContext(CurrentUserContext);
 
   return (
     <div className="feed-toggle">
