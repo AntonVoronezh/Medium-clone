@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Props} from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { Routes } from "./routes";
@@ -6,7 +6,7 @@ import TopBar from "./components/topBar";
 import { CurrentUserProvider } from "./contexts/currentUser";
 import CurrentUserChecker from "./components/currentUserChecker";
 
-function App() {
+const App:React.FC = () =>  {
   return (
     <CurrentUserProvider className="App">
       <CurrentUserChecker>

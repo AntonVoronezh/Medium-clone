@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+
 import { ErrorMessage } from "./errorMessage";
-import { CurrentUserContext } from "../contexts/currentUser";
 
 export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
   const [title, setTitle] = useState("");
@@ -8,7 +8,7 @@ export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
   const [description, setDescription] = useState("");
   const [tagList, setTagList] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event): void => {
     event.preventDefault();
     onSubmit({ title, body, description, tagList });
   };
@@ -57,11 +57,10 @@ export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
                 <fieldset className="form-group">
                   <textarea
                     className="form-control"
-                    rows="8"
                     placeholder="Write your article (in markdown)"
                     value={body}
                     onChange={(event) => setBody(event.target.value)}
-                  ></textarea>
+                  />
                 </fieldset>
               </fieldset>
               <fieldset>
