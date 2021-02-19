@@ -1,9 +1,10 @@
 import React, { Fragment, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+
 import { CurrentUserContext } from "../contexts/currentUser";
 
 const TopBar = () => {
-  const [currentUserState] = useContext(CurrentUserContext);
+  const { state: currentUserState } = useContext(CurrentUserContext);
 
   return (
     <nav className="navbar navbar-light">
@@ -53,7 +54,7 @@ const TopBar = () => {
                   <img
                     className="user-pic"
                     src={currentUserState.currentUser.image}
-                    alt=''
+                    alt=""
                   />
                   &nbsp; {currentUserState.currentUser.username}
                 </NavLink>
