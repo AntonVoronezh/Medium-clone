@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-export const useLocalStorage = (key, initialValue = "") => {
+export const useLocalStorage = (key: string, initialValue: string = "") => {
   const [value, setValue] = useState(() => {
-    return localStorage.getItem(key|| initialValue) ;
+    return localStorage.getItem(key || initialValue);
   });
 
   useEffect(() => {
-    localStorage.setItem(key, value);
+    value && localStorage.setItem(key, value);
   }, [value, key]);
 
-  return [value, setValue];
+  return { value, setValue };
 };
