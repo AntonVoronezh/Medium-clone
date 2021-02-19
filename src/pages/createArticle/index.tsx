@@ -15,7 +15,7 @@ export const CreateArticle = () => {
   const apiUrl = "/articles";
   const [{ response, error }, doFetch] = useFetch(apiUrl);
   const [isSuccessfullSubmit, setIsSucsessfullSubmit] = useState(false);
-  const [currentUserState] = useContext(CurrentUserContext);
+  const { state: currentUserState } = useContext(CurrentUserContext);
 
   const handleSubmit = (article) => {
     doFetch({

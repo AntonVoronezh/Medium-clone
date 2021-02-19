@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useFetch } from "../../hooks/useFetch";
 import { Link, Redirect } from "react-router-dom";
+
+import { useFetch } from "../../hooks/useFetch";
 import { Loading } from "../../components/loading";
 import { ErrorMessage } from "../../components/errorMessage";
 import { TagList } from "../../components/tagList";
@@ -13,7 +14,7 @@ export const Article = (props) => {
   const [{ response: deleteArticleResponse }, doDeleteArticle] = useFetch(
     apiUrl
   );
-  const [currentUserState] = useContext(CurrentUserContext);
+  const { state: currentUserState } = useContext(CurrentUserContext);
   const [isSuccessfullDelete, setIsSucsessfullDelete] = useState(false);
 
   const isAuthor = () => {

@@ -7,19 +7,21 @@ import { CurrentUserContext } from "../../contexts/currentUser";
 import BackendErrorMessages from "./components/backendErrorMessages";
 
 const Authentication = (props) => {
-  const isLogin = props.match.path === "/login";
-  const pageTitle = isLogin ? "Sign In" : "Sign Up";
-  const descriptionLink = isLogin ? "/register" : "/login";
-  const descriptionText = isLogin ? "Need an account?" : "Have an account?";
-  const apiUrl = isLogin ? "/users/login" : "/users";
+  const isLogin: boolean = props.match.path === "/login";
+  const pageTitle: string = isLogin ? "Sign In" : "Sign Up";
+  const descriptionLink: string = isLogin ? "/register" : "/login";
+  const descriptionText: string = isLogin
+    ? "Need an account?"
+    : "Have an account?";
+  const apiUrl: string = isLogin ? "/users/login" : "/users";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
-  const [, setToken] = useLocalStorage("token");
-  const [, dispatch] = useContext(CurrentUserContext);
+  const { setValue: setToken } = useLocalStorage("token");
+  const { dispatch } = useContext(CurrentUserContext);
 
   const inputRef = useRef(null);
 
