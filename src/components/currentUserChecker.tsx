@@ -1,9 +1,10 @@
 import { useEffect, useContext } from "react";
+
 import { useFetch } from "../hooks/useFetch";
 import { CurrentUserContext } from "../contexts/currentUser";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-const CurrentUserChecker = ({ children }) => {
+export const CurrentUserChecker = ({ children }: any): any => {
   const [{ response }, doFetch] = useFetch("/user");
   const { dispatch } = useContext(CurrentUserContext);
   const { value: token } = useLocalStorage("token");
@@ -29,5 +30,3 @@ const CurrentUserChecker = ({ children }) => {
 
   return children;
 };
-
-export default CurrentUserChecker;

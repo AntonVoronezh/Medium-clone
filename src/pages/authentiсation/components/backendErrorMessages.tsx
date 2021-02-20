@@ -1,6 +1,6 @@
 import React from "react";
 
-const BackendErrorMessages = ({ errors }) => {
+export const BackendErrorMessages = ({ errors }) => {
   const messages = Object.keys(errors).map((name) => {
     const mess = errors[name].join(" ");
     return `${name} ${mess}`;
@@ -16,5 +16,3 @@ const BackendErrorMessages = ({ errors }) => {
       </ul>
   );
 };
-
-export default BackendErrorMessages;

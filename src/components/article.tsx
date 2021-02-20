@@ -1,16 +1,29 @@
 import React, { useState, useEffect } from "react";
 
 import { ErrorMessage } from "./errorMessage";
+import { IValue } from "../pages/editArticle";
 
-export const ArticleForm = ({ onSubmit, errors, initialValues }) => {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-  const [description, setDescription] = useState("");
-  const [tagList, setTagList] = useState("");
+interface IProps {
+  onSubmit: ({ tagList, body, description, title }: IValue) => void;
+  errors: string[];
+  initialValues: IValue | null;
+}
 
-  const handleSubmit = (event): void => {
+export const ArticleForm = ({
+  onSubmit,
+  errors,
+  initialValues,
+}: IProps): JSX.Element => {
+  const [title, setTitle] = useState<string>("");
+  const [body, setBody] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [tagList, setTagList] = useState<string>("");
+
+  const handleSubmit = (event: React.SyntheticEvent<EventTarget>): void => {
     event.preventDefault();
-    onSubmit({ title, body, description, tagList });
+
+    const tagListFor = tagList.split("");
+    onSubmit({ title, body, description, tagList: tagListFor });
   };
 
   useEffect(() => {
