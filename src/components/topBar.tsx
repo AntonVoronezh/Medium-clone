@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 
 import { CurrentUserContext } from "../contexts/currentUser";
 
-const TopBar = () => {
+export const TopBar = (): JSX.Element => {
   const { state: currentUserState } = useContext(CurrentUserContext);
 
   return (
@@ -66,5 +66,3 @@ const TopBar = () => {
     </nav>
   );
 };
-
-export default TopBar;
