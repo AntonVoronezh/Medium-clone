@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 
 import { CurrentUserContext } from "../../contexts/currentUser";
 import { useFetch } from "../../hooks/useFetch";
-import BackendErrorMessages from "../authentiсation/components/backendErrorMessages";
+import { BackendErrorMessages } from "../authentiсation/components/backendErrorMessages";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 export const Settings = () => {

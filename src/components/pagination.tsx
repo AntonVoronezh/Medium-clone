@@ -4,8 +4,21 @@ import classNames from "classnames";
 
 import { range } from "../utils";
 
-const PaginationItem = ({ page, currentPage, url }) => {
-  const liClasses = classNames({
+interface IProps {
+  page: number;
+  currentPage: number;
+  url: string;
+}
+
+interface IPropsPaginator {
+  currentPage: number;
+  url: string;
+  total: number;
+  limit: number;
+}
+
+const PaginationItem = ({ page, currentPage, url }: IProps): JSX.Element => {
+  const liClasses: string = classNames({
     "page-item": true,
     active: currentPage === page,
   });
@@ -19,17 +32,29 @@ const PaginationItem = ({ page, currentPage, url }) => {
   );
 };
 
-export const Pagination = ({ total, limit, url, currentPage }) => {
-  const pagesCount = Math.ceil(total / limit);
-  const pages = range(1, pagesCount);
+export const Pagination = ({
+  total,
+  limit,
+  url,
+  currentPage,
+}: IPropsPaginator): JSX.Element => {
+  const pagesCount: number = Math.ceil(total / limit);
+  const pages: number[] = range(1, pagesCount);
 
   return (
     <ul className="pagination">
-      {pages.map((page) => {
-        return (
-          <PaginationItem key={page} page={page} currentPage={currentPage} url={url} />
-        );
-      })}
+      {pages.map(
+        (page): JSX.Element => {
+          return (
+            <PaginationItem
+              key={page}
+              page={page}
+              currentPage={currentPage}
+              url={url}
+            />
+          );
+        }
+      )}
     </ul>
   );
 };
