@@ -4,9 +4,10 @@ import { ArticleForm } from "../../components/article";
 import { useFetch } from "../../hooks/useFetch";
 import { Redirect } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUser";
+import {IValue} from "../editArticle";
 
 export const CreateArticle = () => {
-  const initialValues = {
+  const initialValues: IValue = {
     title: "",
     body: "",
     description: "",

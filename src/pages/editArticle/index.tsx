@@ -5,11 +5,11 @@ import { useFetch } from "../../hooks/useFetch";
 import { ArticleForm } from "../../components/article";
 import { CurrentUserContext } from "../../contexts/currentUser";
 
-interface IValue {
+export interface IValue {
   title: string;
   body: string;
   description: string;
-  tagList: string;
+  tagList: string[];
 }
 
 interface IProps {
@@ -30,7 +30,7 @@ export const EditArticle: ({ match }: IProps) => JSX.Element = ({
   const [isSuccessfullySubmit, setIsSuccessfullySubmit] = useState(false);
   const { state: currentUserState } = useContext(CurrentUserContext);
 
-  const handleSubmit = (article) => {
+  const handleSubmit = (article: IValue): void => {
     doUpdateArticle({
       method: "put",
       data: { article },
