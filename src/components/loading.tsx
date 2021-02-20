@@ -1,5 +1,5 @@
 import React from "react";
 
-export const Loading = () => {
+export const Loading = (): JSX.Element => {
   return <div>Loading...</div>;
 };

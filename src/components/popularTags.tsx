@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { useFetch } from "../hooks/useFetch";
 import { Loading } from "./loading";
 import { ErrorMessage } from "./errorMessage";
-import { Link } from "react-router-dom";
 
-export const PopularTags = () => {
+export const PopularTags = (): JSX.Element=> {
   const [{ isLoading, response, error }, doFetch] = useFetch("/tags");
 
   useEffect(() => {
@@ -14,6 +15,7 @@ export const PopularTags = () => {
   if (isLoading || !response) {
     return <Loading />;
   }
+
   if (error) {
     return <ErrorMessage errors={[]}/>;
   }
