@@ -1,10 +1,10 @@
-import React, {Props} from "react";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { Routes } from "./routes";
-import TopBar from "./components/topBar";
+import { TopBar } from "./components/topBar";
 import { CurrentUserProvider } from "./contexts/currentUser";
-import CurrentUserChecker from "./components/currentUserChecker";
+import { CurrentUserChecker } from "./components/currentUserChecker";
 
 const App:React.FC = () =>  {
   return (
