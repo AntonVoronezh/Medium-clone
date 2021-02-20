@@ -1,9 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import { TagList } from "./tagList";
 import { AddToFavorites } from "./addToFavorites";
 
-export const Feed = ({ articles }) => {
+interface IAuthor {
+  username?: string;
+  image?: string;
+}
+
+export interface IArticle {
+  author: IAuthor;
+  favorited: boolean;
+  favoritesCount: number;
+  createdAt: string;
+  title: string;
+  description: string;
+  tagList: string[];
+  slug: string;
+}
+
+interface IProps {
+  articles: IArticle[];
+}
+
+export const Feed = ({ articles }: IProps): JSX.Element => {
   return (
     <div>
       {articles.map((article, idx) => {
