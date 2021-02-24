@@ -6,7 +6,7 @@ import { TopBar } from "./components/topBar";
 import { CurrentUserProvider } from "./contexts/currentUser";
 import { CurrentUserChecker } from "./components/currentUserChecker";
 
-const App:React.FC = () =>  {
+const App:React.FC = (): JSX.Element =>  {
   return (
     <CurrentUserProvider className="App">
       <CurrentUserChecker>
