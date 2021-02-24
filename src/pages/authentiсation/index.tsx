@@ -6,7 +6,11 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import { BackendErrorMessages } from "./components/backendErrorMessages";
 
-const Authentication = (props) => {
+interface IProps {
+  match: any;
+}
+
+const Authentication = (props: IProps): JSX.Element => {
   const isLogin: boolean = props.match.path === "/login";
   const pageTitle: string = isLogin ? "Sign In" : "Sign Up";
   const descriptionLink: string = isLogin ? "/register" : "/login";
@@ -15,10 +19,10 @@ const Authentication = (props) => {
     : "Have an account?";
   const apiUrl: string = isLogin ? "/users/login" : "/users";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [isSuccessfulSubmit, setSuccessfulSubmit] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [isSuccessfulSubmit, setSuccessfulSubmit] = useState<boolean>(false);
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
   const { setValue: setToken } = useLocalStorage("token");
   const { dispatch } = useContext(CurrentUserContext);
@@ -39,11 +43,16 @@ const Authentication = (props) => {
     dispatch({ type: "SET_AUTHORIZED", payload: response.user });
   }, [response, setToken, dispatch, setSuccessfulSubmit]);
 
-  const emailHandler = (event) => setEmail(event.target.value);
-  const userHandler = (event) => setUsername(event.target.value);
-  const passwordHandler = (event) => setPassword(event.target.value);
+  const emailHandler = (event: React.SyntheticEvent<EventTarget>): void =>
+    setEmail((event.target as HTMLInputElement).value);
 
-  const handleSubmit = (event) => {
+  const userHandler = (event: React.SyntheticEvent<EventTarget>): void =>
+    setUsername((event.target as HTMLInputElement).value);
+
+  const passwordHandler = (event: React.SyntheticEvent<EventTarget>): void =>
+    setPassword((event.target as HTMLInputElement).value);
+
+  const handleSubmit = (event: React.SyntheticEvent<EventTarget>): void => {
     event.preventDefault();
 
     const user = isLogin ? { email, password } : { email, password, username };

@@ -6,19 +6,19 @@ import { Redirect } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/currentUser";
 import {IValue} from "../editArticle";
 
-export const CreateArticle = () => {
+export const CreateArticle = (): JSX.Element => {
   const initialValues: IValue = {
     title: "",
     body: "",
     description: "",
     tagList: [],
   };
-  const apiUrl = "/articles";
+  const apiUrl: string = "/articles";
   const [{ response, error }, doFetch] = useFetch(apiUrl);
-  const [isSuccessfullSubmit, setIsSucsessfullSubmit] = useState(false);
+  const [isSuccessfullSubmit, setIsSucsessfullSubmit] = useState<boolean>(false);
   const { state: currentUserState } = useContext(CurrentUserContext);
 
-  const handleSubmit = (article) => {
+  const handleSubmit = (article: IValue): void => {
     doFetch({
       method: "post",
       data: {

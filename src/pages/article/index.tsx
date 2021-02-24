@@ -7,9 +7,13 @@ import { ErrorMessage } from "../../components/errorMessage";
 import { TagList } from "../../components/tagList";
 import { CurrentUserContext } from "../../contexts/currentUser";
 
-export const Article = (props) => {
+interface IProps {
+  match: any;
+}
+
+export const Article = (props: IProps): JSX.Element => {
   const slug = props.match.params.slug;
-  const apiUrl = `/articles/${slug}`;
+  const apiUrl: string = `/articles/${slug}`;
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
   const [{ response: deleteArticleResponse }, doDeleteArticle] = useFetch(
     apiUrl
@@ -17,7 +21,7 @@ export const Article = (props) => {
   const { state: currentUserState } = useContext(CurrentUserContext);
   const [isSuccessfullDelete, setIsSucsessfullDelete] = useState(false);
 
-  const isAuthor = () => {
+  const isAuthor = (): boolean => {
     if (!response || !currentUserState.isLoggedIn) {
       return false;
     }
@@ -27,7 +31,7 @@ export const Article = (props) => {
     );
   };
 
-  const deleteArticle = () => {
+  const deleteArticle = (): void => {
     doDeleteArticle({ method: "delete" });
   };
 
