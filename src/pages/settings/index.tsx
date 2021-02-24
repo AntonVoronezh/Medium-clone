@@ -6,20 +6,20 @@ import { useFetch } from "../../hooks/useFetch";
 import { BackendErrorMessages } from "../authentiсation/components/backendErrorMessages";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 
-export const Settings = () => {
+export const Settings = (): JSX.Element => {
   const { state: currentUserState, dispatch } = useContext(CurrentUserContext);
-  const apiUrl = "/user";
+  const apiUrl: string = "/user";
   const [{ response, error }, doFetch] = useFetch(apiUrl);
-  const [image, setImage] = useState("");
-  const [username, setUsername] = useState("");
-  const [bio, setBio] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [image, setImage] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [bio, setBio] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [pass, setPass] = useState<string>("");
   const { setValue: setToken } = useLocalStorage("token");
   const [isSuccessfullLogout, setIsSucsessfullLogout] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.SyntheticEvent<EventTarget>): void => {
+    event.preventDefault();
 
     doFetch({
       method: "put",
@@ -34,8 +34,9 @@ export const Settings = () => {
       },
     });
   };
-  const logout = (e) => {
-    e.preventDefault();
+
+  const logout = (event: React.SyntheticEvent<EventTarget>): void => {
+    event.preventDefault();
 
     setToken("");
     dispatch({ type: "LOGOUT" });

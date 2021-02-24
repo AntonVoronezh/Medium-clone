@@ -20,7 +20,7 @@ export const EditArticle: ({ match }: IProps) => JSX.Element = ({
   match,
 }: IProps) => {
   const slug = match.params.slug;
-  const apiUrl = `/articles/${slug}`;
+  const apiUrl: string = `/articles/${slug}`;
   const [{ response: fetchArticleResponse }, doFetchArticle] = useFetch(apiUrl);
   const [
     { response: updateArticleResponse, error: updateArticleError },

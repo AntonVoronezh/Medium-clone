@@ -4,16 +4,24 @@ import React, { Fragment, useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { Feed } from "../../components/feed";
 import { Pagination } from "../../components/pagination";
-import { getPaginator, limit } from "../../utils";
+import { getPaginator, IPaginator, limit } from "../../utils";
 import { PopularTags } from "../../components/popularTags";
-import {Loading} from "../../components/loading";
-import {ErrorMessage} from "../../components/errorMessage";
-import {FeedToggler} from "../../components/feedToggler";
+import { Loading } from "../../components/loading";
+import { ErrorMessage } from "../../components/errorMessage";
+import { FeedToggler } from "../../components/feedToggler";
 
-export const GlobalFeed = ({ location, match: { url } }) => {
+interface IProps {
+  location: any;
+  match: any;
+}
+
+export const GlobalFeed = ({
+  location,
+  match: { url },
+}: IProps): JSX.Element => {
   const { offset, currentPage } = getPaginator(location);
-  const stringParameters = stringify({ offset, limit });
-  const apiUrl = `/articles?${stringParameters}`;
+  const stringParameters: IPaginator = stringify({ offset, limit });
+  const apiUrl: string = `/articles?${stringParameters}`;
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
 
   useEffect(() => {
@@ -31,9 +39,9 @@ export const GlobalFeed = ({ location, match: { url } }) => {
       <div className="container page">
         <div className="row">
           <div className="col-md-9">
-            <FeedToggler tagName={''}/>
+            <FeedToggler tagName={""} />
             {isLoading && <Loading />}
-            {error && <ErrorMessage errors={[]}/>}
+            {error && <ErrorMessage errors={[]} />}
             {!isLoading && response && (
               <Fragment>
                 <Feed articles={response.articles}></Feed>
