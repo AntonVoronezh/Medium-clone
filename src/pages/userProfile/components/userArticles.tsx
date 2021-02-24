@@ -1,23 +1,40 @@
 import React, { Fragment, useEffect } from "react";
 import { stringify } from "query-string";
 
-import { getPaginator, limit } from "../../../utils";
+import { getPaginator, IPaginator, limit } from "../../../utils";
 import { useFetch } from "../../../hooks/useFetch";
 import { Loading } from "../../../components/loading";
-import { ErrorMessage } from "../../../components/errorMessage";
 import { Feed } from "../../../components/feed";
 import { Pagination } from "../../../components/pagination";
 
-export const UserArticles = ({ location, username, isFavorites, url }) => {
-  const { offset, currentPage } = getPaginator(location.search);
-  const getApiUrl = ({ username, isFavorites, offset }) => {
+interface IProps {
+  location: any;
+  username: string;
+  isFavorites: boolean;
+  url: string;
+}
+
+interface IApi {
+  username: string;
+  isFavorites: boolean;
+  offset: number;
+}
+
+export const UserArticles = ({
+  location,
+  username,
+  isFavorites,
+  url,
+}: IProps): JSX.Element => {
+  const { offset, currentPage }: IPaginator = getPaginator(location.search);
+  const getApiUrl = ({ username, isFavorites, offset }: IApi): string => {
     const params = isFavorites
       ? { limit, offset, favorited: username }
       : { limit, offset, author: username };
 
     return `/articles?${stringify(params)}`;
   };
-  const apiUrl = getApiUrl({ username, isFavorites, offset });
+  const apiUrl: string = getApiUrl({ username, isFavorites, offset });
   const [{ response, isLoading, error }, doFetch] = useFetch(apiUrl);
 
   useEffect(() => {
