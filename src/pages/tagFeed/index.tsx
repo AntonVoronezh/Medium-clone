@@ -4,17 +4,22 @@ import React, { Fragment, useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { Feed } from "../../components/feed";
 import { Pagination } from "../../components/pagination";
-import { getPaginator, limit } from "../../utils";
+import {getPaginator, IPaginator, limit} from "../../utils";
 import { PopularTags } from "../../components/popularTags";
 import { Loading } from "../../components/loading";
 import { ErrorMessage } from "../../components/errorMessage";
 import { FeedToggler } from "../../components/feedToggler";
 
-export const TagFeed = ({ location, match }) => {
-  const tagName = match.params.slug;
-  const { offset, currentPage } = getPaginator(location);
+interface IProps {
+  location: any;
+  match: any;
+}
+
+export const TagFeed = ({ location, match }: IProps): JSX.Element => {
+  const tagName: string = match.params.slug;
+  const { offset, currentPage }: IPaginator = getPaginator(location);
   const stringParameters = stringify({ offset, limit, tag: tagName });
-  const apiUrl = `/articles?${stringParameters}`;
+  const apiUrl: string = `/articles?${stringParameters}`;
   const [{ isLoading, response, error }, doFetch] = useFetch(apiUrl);
 
   useEffect(() => {
