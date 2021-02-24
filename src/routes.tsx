@@ -11,7 +11,7 @@ import { EditArticle } from "./pages/editArticle";
 import { Settings } from "./pages/settings";
 import { UserProfile } from "./pages/userProfile";
 
-export const Routes = () => {
+export const Routes = (): JSX.Element => {
   return (
     <Switch>
       <Route path="/" component={YourFeed} exact={true} />
